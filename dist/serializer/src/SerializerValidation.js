@@ -1,7 +1,16 @@
+'use strict';
+
+exports.__esModule = true;
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-import { Long } from 'bytebuffer';
-import ChainTypes from '../../chain/src/ChainTypes';
+var _bytebuffer = require('bytebuffer');
+
+var _ChainTypes = require('../../chain/src/ChainTypes');
+
+var _ChainTypes2 = _interopRequireDefault(_ChainTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var MAX_SAFE_INT = 9007199254740991;
 var MIN_SAFE_INT = -9007199254740991;
@@ -28,7 +37,7 @@ var _my = {
     require_long: function require_long(value) {
         var field_name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
 
-        if (!Long.isLong(value)) {
+        if (!_bytebuffer.Long.isLong(value)) {
             throw new Error('Long value required ' + field_name + ' ' + value);
         }
         return value;
@@ -106,7 +115,7 @@ var _my = {
         if (this.is_empty(value)) {
             return value;
         }
-        if (Long.isLong(value)) {
+        if (_bytebuffer.Long.isLong(value)) {
             return value;
         }
 
@@ -114,7 +123,7 @@ var _my = {
         if (typeof value === "number") {
             value = "" + value;
         }
-        return Long.fromString(value);
+        return _bytebuffer.Long.fromString(value);
     },
     to_string: function to_string(value) {
         var field_name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
@@ -129,7 +138,7 @@ var _my = {
             this.no_overflow53(value, field_name);
             return "" + value;
         }
-        if (Long.isLong(value)) {
+        if (_bytebuffer.Long.isLong(value)) {
             return value.toString();
         }
         throw 'unsupported type ' + field_name + ': (' + (typeof value === 'undefined' ? 'undefined' : _typeof(value)) + ') ' + value;
@@ -188,7 +197,7 @@ var _my = {
         if (this.is_empty(value)) {
             return value;
         }
-        var object_type = ChainTypes.object_type[type];
+        var object_type = _ChainTypes2.default.object_type[type];
         if (!object_type) {
             throw new Error('Unknown object type ' + type + ' ' + field_name + ' ' + value);
         }
@@ -247,7 +256,7 @@ var _my = {
             return value;
         }
         var type_id = this.get_protocol_type(value, field_name);
-        return Object.keys(ChainTypes.object_type)[type_id];
+        return Object.keys(_ChainTypes2.default.object_type)[type_id];
     },
 
 
@@ -281,7 +290,7 @@ var _my = {
             }
             return;
         }
-        if (Long.isLong(value)) {
+        if (_bytebuffer.Long.isLong(value)) {
             // typeof value.toInt() is 'number'
             this.no_overflow53(value.toInt(), field_name);
             return;
@@ -295,7 +304,7 @@ var _my = {
         var field_name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
 
         // https://github.com/dcodeIO/Long.js/issues/20
-        if (Long.isLong(value)) {
+        if (_bytebuffer.Long.isLong(value)) {
             return;
         }
 
@@ -319,7 +328,7 @@ var _my = {
             if (value === "") {
                 value = "0";
             }
-            var long_string = Long.fromString(value, true).toString();
+            var long_string = _bytebuffer.Long.fromString(value, true).toString();
             if (long_string !== value.trim()) {
                 throw new Error('overflow ' + field_name + ' ' + value);
             }
@@ -336,4 +345,5 @@ var _my = {
     }
 };
 
-export default _my;
+exports.default = _my;
+module.exports = exports['default'];
